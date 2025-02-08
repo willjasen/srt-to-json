@@ -2,6 +2,7 @@ import re
 import json
 import glob
 import os
+import pathlib
 from sys import argv
 from slugify import slugify
 
@@ -48,8 +49,11 @@ if len(argv) == 1:
 
     for srt_filename in srt_files:
         out_filename = srt_filename.replace('.srt', '.json')
-        slugified_filename = slugify(srt_filename)
+
+        base_filename = pathlib.Path(srt_filename).stem
+        slugified_filename = slugify(base_filename)
         print(slugified_filename)
+        
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
         open(out_filename, 'w', encoding="utf-8").write(
