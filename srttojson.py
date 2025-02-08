@@ -50,12 +50,14 @@ if len(argv) == 1:
     for srt_filename in srt_files:
         out_filename = srt_filename.replace('.srt', '.json')
 
+        # slugify the filename
         base_filename = pathlib.Path(srt_filename).stem
         slugified_filename = slugify(base_filename)
         slugified_filename = re.sub(r'^\d+-', '', slugified_filename)
         slugified_filename = re.sub(r'-\d+$', '', slugified_filename)
         print(slugified_filename)
         
+        out_filename = os.path.join(dir_path + 'JSON', slugified_filename + '.json')
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
         open(out_filename, 'w', encoding="utf-8").write(
