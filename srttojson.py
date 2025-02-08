@@ -52,9 +52,16 @@ if len(argv) == 1:
 
         # slugify the filename
         base_filename = pathlib.Path(srt_filename).stem
-        slugified_filename = slugify(base_filename)
-        slugified_filename = re.sub(r'^\d+-', '', slugified_filename)
-        slugified_filename = re.sub(r'-\d+$', '', slugified_filename)
+        no_trailing_numbers_filename = re.sub(r'-\d+$', '', slugified_filename)
+
+        parts = no_trailing_numbers_filename.split()
+        leading_digits = parts[0]
+        track_number = int(leading_digits.lstrip('0'))
+
+        no_leading_numbers_filename = re.sub(r'^\d+-', '', slugified_filename)
+        
+        slugified_filename = slugify(no_leading_numbers_filename)
+        print(track_number)
         print(slugified_filename)
         
         out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
