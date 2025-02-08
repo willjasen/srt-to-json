@@ -53,6 +53,7 @@ if len(argv) == 1:
         base_filename = pathlib.Path(srt_filename).stem
         slugified_filename = slugify(base_filename)
         # Remove trailing numbers (if any)
+        slugified_filename = re.sub(r'\d+$', '', slugified_filename)
         slugified_filename = re.sub(r'-\d+$', '', slugified_filename)
         print(slugified_filename)
         
