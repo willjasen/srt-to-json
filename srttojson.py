@@ -52,6 +52,8 @@ if len(argv) == 1:
 
         base_filename = pathlib.Path(srt_filename).stem
         slugified_filename = slugify(base_filename)
+        # Remove trailing numbers (if any)
+        slugified_filename = re.sub(r'-\d+$', '', base_filename)
         print(slugified_filename)
         
         srt = open(srt_filename, 'r', encoding="utf-8").read()
