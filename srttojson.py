@@ -1,5 +1,7 @@
 import re
 import json
+import glob
+import os
 from sys import argv
 
 
@@ -39,15 +41,17 @@ def parse_srt(srt_string):
 
     return srt_list
 
+if len(argv) == 1:
+    dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-testing-'
+    srt_files = glob.glob(os.path.join(dir_path, '*.srt'))
 
-if len(argv) == 2:
-    srt_filename = argv[1]
-    out_filename = srt_filename.replace('.srt', '.json')
-    srt = open(srt_filename, 'r', encoding="utf-8").read()
-    parsed_srt = parse_srt(srt)
-    open(out_filename, 'w', encoding="utf-8").write(
-        json.dumps(parsed_srt, indent=2, sort_keys=False))
+    for srt_filename in srt_files:
+        out_filename = srt_filename.replace('.srt', '.json')
+        srt = open(srt_filename, 'r', encoding="utf-8").read()
+        parsed_srt = parse_srt(srt)
+        open(out_filename, 'w', encoding="utf-8").write(
+            json.dumps(parsed_srt, indent=2, sort_keys=False))
 elif len(argv) == 1:
-    print('Type \'srttojson.py filename.srt\'')
+    print('Type \'srttojson.py\'')
 else:
     print('Wrong command.')
