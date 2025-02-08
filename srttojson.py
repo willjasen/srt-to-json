@@ -4,6 +4,7 @@ import glob
 import os
 import pathlib
 import yaml
+import sys
 import ruamel.yaml
 from sys import argv
 from slugify import slugify
