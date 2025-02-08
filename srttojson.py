@@ -48,6 +48,6 @@ if len(argv) == 2:
     open(out_filename, 'w', encoding="utf-8").write(
         json.dumps(parsed_srt, indent=2, sort_keys=False))
 elif len(argv) == 1:
-    print('Type \'srttojson.py filename.srt filename.json\'')
+    print('Type \'srttojson.py filename.srt\'')
 else:
     print('Wrong command.')
