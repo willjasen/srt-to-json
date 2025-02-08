@@ -49,6 +49,8 @@ if len(argv) == 1:
 
     import json
 
+    tracks_metadata = []
+
     for srt_filename in srt_files:
         out_filename = srt_filename.replace('.srt', '.json')
         
@@ -77,14 +79,16 @@ if len(argv) == 1:
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
         
-        # Write metadata to separate file
-        with open(metadata_out_path, 'a', encoding="utf-8") as f:
-            metadata = {
-                'track_title': track_title,
-                'track_number': track_number,
-                'slug': slugified_filename
-            }
-            json.dump(metadata, f, indent=2)
+        track_metadata = {
+            'track_title': track_title,
+            'track_number': track_number,
+            'slug': slugified_filename
+        }
+        tracks_metadata.append(track_metadata)
+
+        # Write metadata to separate file with commas between objects
+        with open(metadata_out_path, 'w', encoding="utf-8") as f:
+            json.dump(tracks_metadata, f, indent=2, separators=(',', ': '))
         
         # Write parsed SRT to main JSON file
         with open(srt_out_filename, 'w', encoding="utf-8") as f:
