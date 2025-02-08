@@ -40,9 +40,9 @@ def parse_srt(srt_string):
     return srt_list
 
 
-if len(argv) == 3:
+if len(argv) == 2:
     srt_filename = argv[1]
-    out_filename = argv[2]
+    out_filename = srt_filename.replace('.srt', '.json')
     srt = open(srt_filename, 'r', encoding="utf-8").read()
     parsed_srt = parse_srt(srt)
     open(out_filename, 'w', encoding="utf-8").write(
