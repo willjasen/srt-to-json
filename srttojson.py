@@ -83,7 +83,7 @@ if len(argv) == 1:
             'Track_Title': track_title,
             'Track_Number': track_number,
             'Track_JSONPath': out_base_filename,
-            'Speakers_Adjusted': false
+            'Speakers_Adjusted': 'false'
         }
         tracks_metadata.append(track_metadata)
 
