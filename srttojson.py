@@ -52,13 +52,23 @@ if len(argv) == 1:
 
         base_filename = pathlib.Path(srt_filename).stem
         no_trailing_numbers_filename = re.sub(r'-\d+$', '', base_filename)
+
+        # Get the track number from the filename
         parts = no_trailing_numbers_filename.split()
         leading_digits = parts[0]
         track_number = int(leading_digits.lstrip('0'))
+
+        # Get the track title from the filename
         no_leading_numbers_filename = re.sub(r'^\d+ ', '', no_trailing_numbers_filename)
-        slugified_filename = slugify(no_leading_numbers_filename)
-        print("Track %s : %s" % (track_number, slugified_filename))
+        track_title = no_leading_numbers_filename
+
+        # Slugify the filename
+        slugified_filename = slugify(track_title)
+
+        print("Track %s : %s (slug = %s)" % (track_number, track_title, slugified_filename))
         
+        out_base_filename = slugified_filename + '.json'
+
         out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
