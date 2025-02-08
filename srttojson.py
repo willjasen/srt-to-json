@@ -78,7 +78,7 @@ if len(argv) == 1:
         parsed_srt = parse_srt(srt)
         
         # Write metadata to separate file
-        with open(metadata_out_path, 'w', encoding="utf-8") as f:
+        with open(metadata_out_path, 'a', encoding="utf-8") as f:
             metadata = {
                 'track_title': track_title,
                 'track_number': track_number,
