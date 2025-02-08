@@ -93,7 +93,7 @@ if len(argv) == 1:
         tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])
 
         yml_metadata = {
-            'track_title': f'"{track_title}"',
+            'track_title': f'\"{track_title}\"',
             'track_number': track_number
         }
         tracks_yml_metadata.append(yml_metadata)
