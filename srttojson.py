@@ -58,7 +58,7 @@ if len(argv) == 1:
         leading_digits = parts[0]
         track_number = int(leading_digits.lstrip('0'))
 
-        no_leading_numbers_filename = re.sub(r'^\d+-', '', no_trailing_numbers_filename)
+        no_leading_numbers_filename = re.sub(r'^\d+ ', '', no_trailing_numbers_filename)
         
         slugified_filename = slugify(no_leading_numbers_filename)
         print(track_number)
