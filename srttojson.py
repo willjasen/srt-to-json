@@ -86,6 +86,7 @@ if len(argv) == 1:
             'Speakers_Adjusted': 'false'
         }
         tracks_metadata.append(track_metadata)
+        tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])
 
         # Write metadata to separate file with commas between objects
         with open(metadata_out_path, 'w', encoding="utf-8") as f:
