@@ -3,6 +3,7 @@ import json
 import glob
 import os
 from sys import argv
+from slugify import slugify
 
 
 def parse_time(time_string):
