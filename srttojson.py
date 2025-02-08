@@ -80,9 +80,10 @@ if len(argv) == 1:
         parsed_srt = parse_srt(srt)
         
         track_metadata = {
-            'track_title': track_title,
-            'track_number': track_number,
-            'slug': slugified_filename
+            'Track_Title': track_title,
+            'Track_Number': track_number,
+            'Track_JSONPath': out_base_filename,
+            "Speakers_Adjusted": false
         }
         tracks_metadata.append(track_metadata)
 
