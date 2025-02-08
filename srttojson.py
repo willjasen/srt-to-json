@@ -51,6 +51,7 @@ if len(argv) == 1:
     import json
 
     tracks_metadata = []
+    tracks_yml_metadata = []
 
     for srt_filename in srt_files:
         out_filename = srt_filename.replace('.srt', '.json')
@@ -91,12 +92,19 @@ if len(argv) == 1:
         tracks_metadata.append(track_metadata)
         tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])
 
+        yml_metadata = {
+            'track_title': track_title,
+            'track_number': track_number
+        }
+        tracks_yml_metadata.append(yml_metadata)
+        tracks_yml_metadata = sorted(tracks_yml_metadata, key=lambda x: x['track_number'])
+
         # Write metadata to separate file with commas between objects
         with open(metadata_out_path, 'w', encoding="utf-8") as f:
             json.dump(tracks_metadata, f, indent=2, separators=(',', ': '))
 
         with open(metadata_out_yml_path, 'w') as f:
-            yaml.dump(tracks_metadata, f, default_flow_style=False)
+            yaml.dump(tracks_yml_metadata, f, default_flow_style=False)
         
         # Write parsed SRT to main JSON file
         with open(srt_out_filename, 'w', encoding="utf-8") as f:
