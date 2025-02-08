@@ -50,19 +50,14 @@ if len(argv) == 1:
     for srt_filename in srt_files:
         out_filename = srt_filename.replace('.srt', '.json')
 
-        # slugify the filename
         base_filename = pathlib.Path(srt_filename).stem
         no_trailing_numbers_filename = re.sub(r'-\d+$', '', base_filename)
-
         parts = no_trailing_numbers_filename.split()
         leading_digits = parts[0]
         track_number = int(leading_digits.lstrip('0'))
-
         no_leading_numbers_filename = re.sub(r'^\d+ ', '', no_trailing_numbers_filename)
-        
         slugified_filename = slugify(no_leading_numbers_filename)
-        print(track_number)
-        print(slugified_filename)
+        print("Track %s : %s" % (track_number, slugified_filename))
         
         out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
         srt = open(srt_filename, 'r', encoding="utf-8").read()
