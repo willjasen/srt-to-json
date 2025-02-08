@@ -22,18 +22,21 @@ def parse_srt(srt_string):
             pos = re.search(r'\d+:\d+:\d+,\d+ --> \d+:\d+:\d+,\d+',
                             line).end() + 1
             content = line[pos:]
-            start_time_string = re.findall(
+            speaker, text = content.split("|")
+
+            start_time = re.findall(
                 r'(\d+:\d+:\d+,\d+) --> \d+:\d+:\d+,\d+', line)[0]
-            end_time_string = re.findall(
+            end_time = re.findall(
                 r'\d+:\d+:\d+,\d+ --> (\d+:\d+:\d+,\d+)', line)[0]
-            start_time = parse_time(start_time_string)
-            end_time = parse_time(end_time_string)
+            # start_time = parse_time(start_time_string)
+            # end_time = parse_time(end_time_string)
 
             srt_list.append({
                 'Index': index,
-                'content': content,
                 'Start Time': start_time,
-                'End Time': end_time
+                'End Time': end_time,
+                'Speaker': speaker,
+                'Text': text
             })
 
     return srt_list
