@@ -3,6 +3,7 @@ import json
 import glob
 import os
 import pathlib
+import yaml
 from sys import argv
 from slugify import slugify
 
@@ -72,9 +73,11 @@ if len(argv) == 1:
         print("Track %s : %s (slug = %s)" % (track_number, track_title, slugified_filename))
         
         out_base_filename = slugified_filename + '.json'
-        metadata_out_filename = 'metadata.json'  # Write metadata to a separate file
+        metadata_out_filename = 'metadata.json'
+        metadata_out_yml_filename = 'metadata.yml'
         srt_out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
         metadata_out_path = os.path.join(dir_path, metadata_out_filename)
+        metadata_out_yml_path = os.path.join(dir_path, metadata_out_yml_filename)
         
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
@@ -91,6 +94,9 @@ if len(argv) == 1:
         # Write metadata to separate file with commas between objects
         with open(metadata_out_path, 'w', encoding="utf-8") as f:
             json.dump(tracks_metadata, f, indent=2, separators=(',', ': '))
+
+        with open(metadata_out_yml_path, 'w') as f:
+            yaml.dump(tracks_metadata, f, default_flow_style=False)
         
         # Write parsed SRT to main JSON file
         with open(srt_out_filename, 'w', encoding="utf-8") as f:
