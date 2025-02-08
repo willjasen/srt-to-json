@@ -4,6 +4,7 @@ import glob
 import os
 import pathlib
 import yaml
+import ruamel.yaml
 from sys import argv
 from slugify import slugify
 
@@ -48,8 +49,6 @@ if len(argv) == 1:
     dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-testing-'
     srt_files = glob.glob(os.path.join(dir_path, '**/*.srt'))
 
-    import json
-
     tracks_metadata = []
     tracks_yml_metadata = []
 
@@ -93,7 +92,7 @@ if len(argv) == 1:
         tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])
 
         yml_metadata = {
-            'track_title': f"\"{track_title}\"",
+            'track_title': ruamel.yaml.scalarstring.DoubleQuotedScalarString(track_title),
             'track_number': track_number
         }
         tracks_yml_metadata.append(yml_metadata)
@@ -103,7 +102,7 @@ if len(argv) == 1:
         with open(metadata_out_path, 'w', encoding="utf-8") as f:
             json.dump(tracks_metadata, f, indent=2, separators=(',', ': '))
 
-        print("YML metadata written to %s" % metadata_out_yml_path)
+        # print("YML metadata written to %s" % metadata_out_yml_path)
         with open(metadata_out_yml_path, 'w') as f:
             yaml.dump(tracks_yml_metadata, f, default_flow_style=False)
         
