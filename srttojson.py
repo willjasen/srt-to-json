@@ -43,14 +43,6 @@ def parse_srt(srt_string):
 
     return srt_list
 
-def make_album_tracks_json():
-    tracks_list = []
-
-    tracks_list.append({
-        'Track_Title': ,
-    })
-
-
 if len(argv) == 1:
     dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-testing-'
     srt_files = glob.glob(os.path.join(dir_path, '**/*.srt'))
