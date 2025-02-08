@@ -30,10 +30,10 @@ def parse_srt(srt_string):
             end_time = parse_time(end_time_string)
 
             srt_list.append({
-                'index': index,
+                'Index': index,
                 'content': content,
-                'start': start_time,
-                'end': end_time
+                'Start Time': start_time,
+                'End Time': end_time
             })
 
     return srt_list
