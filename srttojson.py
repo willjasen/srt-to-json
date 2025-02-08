@@ -72,7 +72,7 @@ if len(argv) == 1:
         out_base_filename = slugified_filename + '.json'
         metadata_out_filename = 'metadata.json'  # Write metadata to a separate file
         srt_out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
-        metadata_out_path = os.path.join(dir_path + '/JSON', metadata_out_filename)
+        metadata_out_path = os.path.join(dir_path, metadata_out_filename)
         
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
