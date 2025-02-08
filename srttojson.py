@@ -57,7 +57,7 @@ if len(argv) == 1:
         slugified_filename = re.sub(r'-\d+$', '', slugified_filename)
         print(slugified_filename)
         
-        out_filename = os.path.join(dir_path + 'JSON', slugified_filename + '.json')
+        out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
         open(out_filename, 'w', encoding="utf-8").write(
