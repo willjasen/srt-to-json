@@ -28,8 +28,6 @@ def parse_srt(srt_string):
                 r'(\d+:\d+:\d+,\d+) --> \d+:\d+:\d+,\d+', line)[0]
             end_time = re.findall(
                 r'\d+:\d+:\d+,\d+ --> (\d+:\d+:\d+,\d+)', line)[0]
-            # start_time = parse_time(start_time_string)
-            # end_time = parse_time(end_time_string)
 
             srt_list.append({
                 'Index': index,
