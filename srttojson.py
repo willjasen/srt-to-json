@@ -52,13 +52,13 @@ if len(argv) == 1:
 
         # slugify the filename
         base_filename = pathlib.Path(srt_filename).stem
-        no_trailing_numbers_filename = re.sub(r'-\d+$', '', slugified_filename)
+        no_trailing_numbers_filename = re.sub(r'-\d+$', '', base_filename)
 
         parts = no_trailing_numbers_filename.split()
         leading_digits = parts[0]
         track_number = int(leading_digits.lstrip('0'))
 
-        no_leading_numbers_filename = re.sub(r'^\d+-', '', slugified_filename)
+        no_leading_numbers_filename = re.sub(r'^\d+-', '', base_filename)
         
         slugified_filename = slugify(no_leading_numbers_filename)
         print(track_number)
