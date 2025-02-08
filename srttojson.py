@@ -4,7 +4,6 @@ import glob
 import os
 import pathlib
 import yaml
-import sys
 import ruamel.yaml
 from sys import argv
 from slugify import slugify
@@ -93,7 +92,7 @@ if len(argv) == 1:
         tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])
 
         yml_metadata = {
-            'track_title': ruamel.yaml.scalarstring.DoubleQuotedScalarString(track_title),
+            'track_title': track_title,
             'track_number': track_number
         }
         tracks_yml_metadata.append(yml_metadata)
