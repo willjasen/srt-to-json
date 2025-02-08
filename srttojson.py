@@ -103,6 +103,7 @@ if len(argv) == 1:
         with open(metadata_out_path, 'w', encoding="utf-8") as f:
             json.dump(tracks_metadata, f, indent=2, separators=(',', ': '))
 
+        print("YML metadata written to %s" % metadata_out_yml_path)
         with open(metadata_out_yml_path, 'w') as f:
             yaml.dump(tracks_yml_metadata, f, default_flow_style=False)
         
