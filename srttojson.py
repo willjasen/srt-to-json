@@ -43,37 +43,60 @@ def parse_srt(srt_string):
 
     return srt_list
 
+def make_album_tracks_json():
+    tracks_list = []
+
+    tracks_list.append({
+        'Track_Title': ,
+    })
+
+
 if len(argv) == 1:
     dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-testing-'
     srt_files = glob.glob(os.path.join(dir_path, '**/*.srt'))
 
+    import json
+
     for srt_filename in srt_files:
         out_filename = srt_filename.replace('.srt', '.json')
-
+        
         base_filename = pathlib.Path(srt_filename).stem
         no_trailing_numbers_filename = re.sub(r'-\d+$', '', base_filename)
-
+        
         # Get the track number from the filename
         parts = no_trailing_numbers_filename.split()
         leading_digits = parts[0]
         track_number = int(leading_digits.lstrip('0'))
-
+        
         # Get the track title from the filename
         no_leading_numbers_filename = re.sub(r'^\d+ ', '', no_trailing_numbers_filename)
         track_title = no_leading_numbers_filename
-
+        
         # Slugify the filename
         slugified_filename = slugify(track_title)
-
+        
         print("Track %s : %s (slug = %s)" % (track_number, track_title, slugified_filename))
         
         out_base_filename = slugified_filename + '.json'
-
-        out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
+        metadata_out_filename = 'metadata.json'  # Write metadata to a separate file
+        srt_out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
+        metadata_out_path = os.path.join(dir_path + '/JSON', metadata_out_filename)
+        
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
-        open(out_filename, 'w', encoding="utf-8").write(
-            json.dumps(parsed_srt, indent=2, sort_keys=False))
+        
+        # Write metadata to separate file
+        with open(metadata_out_path, 'w', encoding="utf-8") as f:
+            metadata = {
+                'track_title': track_title,
+                'track_number': track_number,
+                'slug': slugified_filename
+            }
+            json.dump(metadata, f, indent=2)
+        
+        # Write parsed SRT to main JSON file
+        with open(srt_out_filename, 'w', encoding="utf-8") as f:
+            json.dump(parsed_srt, f, indent=2)
 elif len(argv) == 1:
     print('Type \'srttojson.py\'')
 else:
