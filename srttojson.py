@@ -87,7 +87,8 @@ if len(argv) == 1:
             'Track_Number': track_number,
             'Track_JSONPath': out_base_filename,
             'Track_Slug': slugified_filename,
-            'Speakers_Adjusted': 'false'
+            'Speakers_Adjusted': 'false',
+            'USB_Filename': track_title + '.mp3'
         }
         tracks_metadata.append(track_metadata)
         tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])
