@@ -48,6 +48,8 @@ if len(argv) == 1:
 
     for srt_filename in srt_files:
         out_filename = srt_filename.replace('.srt', '.json')
+        slugified_filename = slugify(srt_filename)
+        print(slugified_filename)
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
         open(out_filename, 'w', encoding="utf-8").write(
