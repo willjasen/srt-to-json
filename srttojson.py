@@ -92,7 +92,8 @@ if len(argv) == 1:
             'Track_JSONPath': out_base_filename,
             'Track_Slug': slugified_filename,
             'Speakers_Adjusted': 'false',
-            'USB_Filename': track_title + '.mp3'
+            'USB_Filename': track_title + '.mp3',
+            'Whisper_Model': 'distil-whisper/distil-large-v3'
         }
         tracks_metadata.append(track_metadata)
         tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])

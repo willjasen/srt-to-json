@@ -5,7 +5,7 @@ from glob import glob
 import mutagen
 import pandas as pd
 
-music_dir = "/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/Media/LPC Ultimate Session Bundle/LPC USB/2018 - Longmont Potion Castle - Where In The Hell Is The Lavender House Soundtrack"
+music_dir = "/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/Media/LPC Ultimate Session Bundle/LPC USB/2009 - Longmont Potion Castle 7"
 srt_files_dir = "/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-converting-/SRT"
 output_csv_path = "/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-converting-/track_info.csv"
 
