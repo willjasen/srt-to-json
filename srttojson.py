@@ -61,10 +61,14 @@ if len(argv) == 1:
         # Get the track number from the filename
         parts = no_trailing_numbers_filename.split()
         leading_digits = parts[0]
-        track_number = int(leading_digits.lstrip('0'))
+        try:
+            track_number = int(leading_digits.lstrip('0'))
+        except ValueError:
+            print("Error: could not extract track number from filename %s" % srt_filename)
+            continue
         
         # Get the track title from the filename
-        no_leading_numbers_filename = re.sub(r'^\d+ ', '', no_trailing_numbers_filename)
+        no_leading_numbers_filename = re.sub(r'^\d+ - ', '', no_trailing_numbers_filename)
         track_title = no_leading_numbers_filename
         
         # Slugify the filename
