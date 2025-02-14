@@ -46,7 +46,7 @@ def parse_srt(srt_string):
     return srt_list
 
 if len(argv) == 1:
-    dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-converting-'
+    dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-to convert subtitles and upload-/1988 - Longmont Potion Castle'
     srt_files = glob.glob(os.path.join(dir_path, '**/*.srt'))
 
     tracks_metadata = []
