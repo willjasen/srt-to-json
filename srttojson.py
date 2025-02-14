@@ -88,14 +88,54 @@ for root, _, files in os.walk(dir_path):
             slugified_filename = slugify(track_title)
             print("Processing file: %s" % srt_filename)
 
+            out_base_filename = slugified_filename + '.json'
+            metadata_out_filename = 'metadata.json'
+            metadata_out_yml_filename = 'metadata.yml'
+            srt_out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
+            metadata_out_json_path = os.path.join(root + '/..', metadata_out_filename)
+            metadata_out_yml_path = os.path.join(root + '/..', metadata_out_yml_filename)
+            srt = open(srt_filename, 'r', encoding="utf-8").read()
+            parsed_srt = parse_srt(srt)
+            unix_utc_timestamp = datetime.now(timezone.utc).timestamp()
+
+            track_metadata = {
+                'Last_Modified': int(unix_utc_timestamp),
+                'Track_Title': track_title,
+                'Track_Number': track_number,
+                'Track_JSONPath': out_base_filename,
+                'Track_Slug': slugified_filename,
+                'Speakers_Adjusted': 'false',
+                'Subtitles_Adjusted': 'false',
+                'USB_Filename': track_title + '.mp3',
+                'Whisper_Model': 'distil-whisper/distil-large-v3'
+            }
+
+            tracks_metadata.append(track_metadata)
+            tracks_metadata = sorted(tracks_metadata, key=lambda x: x['Track_Number'])
+
+            yml_metadata = {
+                'track_title': track_title,
+                'track_number': track_number
+            }
+            tracks_yml_metadata.append(yml_metadata)
+            tracks_yml_metadata = sorted(tracks_yml_metadata, key=lambda x: x['track_number'])
+
+
             with open(srt_filename, 'r', encoding="utf-8") as f:
                 srt_content = f.read()
 
             parsed_srt = parse_srt(srt_content)
 
-            # Write metadata to separate file with commas between objects
+            # Write each track's JSON file
             metadata_out_path = os.path.join(root + '/../JSON', slugified_filename + '.json')
             with open(metadata_out_path, 'w', encoding="utf-8") as f:
                 json.dump(parsed_srt, f, indent=2)
+            
+            # Write metadata.yml
+            with open(metadata_out_yml_path, 'w') as f:
+                yaml.dump(tracks_yml_metadata, f, default_flow_style=False)
+            # Write metadata.json
+            with open(metadata_out_json_path, 'w', encoding="utf-8") as f:
+                json.dump(tracks_metadata, f, indent=2)
 
 print("Processing complete.")
