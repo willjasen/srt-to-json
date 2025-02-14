@@ -7,15 +7,29 @@ import yaml
 import ruamel.yaml
 from sys import argv
 from slugify import slugify
+import iso8601
+from datetime import datetime, timezone
 
 
-def parse_time(time_string):
-    hours = int(re.findall(r'(\d+):\d+:\d+,\d+', time_string)[0])
-    minutes = int(re.findall(r'\d+:(\d+):\d+,\d+', time_string)[0])
-    seconds = int(re.findall(r'\d+:\d+:(\d+),\d+', time_string)[0])
-    milliseconds = int(re.findall(r'\d+:\d+:\d+,(\d+)', time_string)[0])
-
-    return (hours * 3600 + minutes * 60 + seconds) * 1000 + milliseconds
+def convert_to_iso8601(timestamp_str):
+    """
+    Convert a Unix epoch timestamp string (e.g. "0211182052") to an ISO 8601 date.
+    
+    Args:
+    timestamp_str (str): The input timestamp string.
+    
+    Returns:
+    str: The input timestamp as an ISO 8601 date
+    """
+    # Remove the leading zeros from the timestamp and convert it to an integer
+    timestamp = int(timestamp_str.lstrip('0'))
+    
+    # Convert the timestamp to a datetime object with Eastern Standard Time timezone
+    eastern_standard_time = pytz.timezone('US/Eastern')
+    dt = datetime.fromtimestamp(timestamp, eastern_standard_time)
+    
+    # Return the ISO 8601 date as a string
+    return dt.isoformat()
 
 
 def parse_srt(srt_string):
@@ -82,16 +96,18 @@ if len(argv) == 1:
         srt_out_filename = os.path.join(dir_path + '/JSON', slugified_filename + '.json')
         metadata_out_path = os.path.join(dir_path, metadata_out_filename)
         metadata_out_yml_path = os.path.join(dir_path, metadata_out_yml_filename)
-        
         srt = open(srt_filename, 'r', encoding="utf-8").read()
         parsed_srt = parse_srt(srt)
+        unix_utc_timestamp = datetime.now(timezone.utc).timestamp()
         
         track_metadata = {
+            'Last_Modified': int(unix_utc_timestamp),
             'Track_Title': track_title,
             'Track_Number': track_number,
             'Track_JSONPath': out_base_filename,
             'Track_Slug': slugified_filename,
             'Speakers_Adjusted': 'false',
+            'Subtitles_Adjusted': 'false',
             'USB_Filename': track_title + '.mp3',
             'Whisper_Model': 'distil-whisper/distil-large-v3'
         }
