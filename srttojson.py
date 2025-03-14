@@ -60,8 +60,8 @@ def parse_srt(srt_string):
     return srt_list
 
 if len(argv) == 1:
-    dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-to convert subtitles and upload-/1988 - Longmont Potion Castle'
-    srt_files = glob.glob(os.path.join(dir_path, '**/*.srt'))
+    dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-to convert subtitles and upload-'
+    srt_files = glob.glob(os.path.join(dir_path, '*.srt'))
 
     tracks_metadata = []
     tracks_yml_metadata = []
@@ -76,9 +76,11 @@ if len(argv) == 1:
         parts = no_trailing_numbers_filename.split()
         leading_digits = parts[0]
         try:
-            track_number = int(leading_digits.lstrip('0'))
+            # track_number = int(leading_digits.lstrip('0'))
+            track_number = 0
         except ValueError:
             print("Error: could not extract track number from filename %s" % srt_filename)
+            track_number = 0
             continue
         
         # Get the track title from the filename
