@@ -7,7 +7,7 @@ from glob import glob
 
 def process_directory(base_dir):
     usb_album_name = os.path.basename(base_dir)
-    usb_album_dir = os.path.join("/Volumes/tote/LPC USB", usb_album_name)
+    usb_album_dir = os.path.join("/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/Downloads/Alive_In_25")
     output_dir = base_dir
     srt_files_dir = os.path.join(output_dir, "SRT")
     output_csv_path = os.path.join(output_dir, "track_info.csv")
