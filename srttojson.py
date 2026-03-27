@@ -8,6 +8,7 @@ import ruamel.yaml
 from sys import argv
 from slugify import slugify
 import iso8601
+import pytz
 from datetime import datetime, timezone
 
 
@@ -61,29 +62,23 @@ def parse_srt(srt_string):
 
 if len(argv) == 1:
     dir_path = '/Users/willjasen/Library/Mobile Documents/com~apple~CloudDocs/wallace-thrasher/-to convert subtitles and upload-'
-    srt_files = glob.glob(os.path.join(dir_path, '**/*.srt'))
+    srt_files = glob.glob(os.path.join(dir_path, '**/*.srt'), recursive=True)
+
+    # Sort files by embedded trailing timestamp (e.g. Title-0327112427.srt)
+    def get_timestamp(f):
+        m = re.search(r'-(\d+)$', pathlib.Path(f).stem)
+        return m.group(1) if m else pathlib.Path(f).stem
+    srt_files = sorted(srt_files, key=get_timestamp)
 
     tracks_metadata = []
     tracks_yml_metadata = []
 
-    for srt_filename in srt_files:
-        out_filename = srt_filename.replace('.srt', '.json')
-        
+    os.makedirs(os.path.join(dir_path, 'JSON'), exist_ok=True)
+
+    for track_number, srt_filename in enumerate(srt_files, 1):
         base_filename = pathlib.Path(srt_filename).stem
-        no_trailing_numbers_filename = re.sub(r'-\d+$', '', base_filename)
-        
-        # Get the track number from the filename
-        parts = no_trailing_numbers_filename.split()
-        leading_digits = parts[0]
-        try:
-            track_number = int(leading_digits.lstrip('0'))
-        except ValueError:
-            print("Error: could not extract track number from filename %s" % srt_filename)
-            continue
-        
-        # Get the track title from the filename
-        no_leading_numbers_filename = re.sub(r'^\d+ - ', '', no_trailing_numbers_filename)
-        track_title = no_leading_numbers_filename
+        # Strip trailing -TIMESTAMP to get the track title
+        track_title = re.sub(r'-\d+$', '', base_filename)
         
         # Slugify the filename
         slugified_filename = slugify(track_title)
@@ -132,7 +127,7 @@ if len(argv) == 1:
         # Write parsed SRT to main JSON file
         with open(srt_out_filename, 'w', encoding="utf-8") as f:
             json.dump(parsed_srt, f, indent=2)
-elif len(argv) == 1:
+elif len(argv) == 2:
     print('Type \'srttojson.py\'')
 else:
     print('Wrong command.')
